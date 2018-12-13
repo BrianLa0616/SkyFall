@@ -11,7 +11,7 @@ public class Menu extends PApplet {
 
 	private Rectangle rules, play, back;
 	private boolean isRulePage;
-	private PImage img;
+	private PImage img, sky;
 	private JFrame window;
 
 	public Menu() {
@@ -30,23 +30,27 @@ public class Menu extends PApplet {
 		isRulePage = false;
 		play = new Rectangle(150, 200, 200, 75);
 		play.setfill(0,180,255);
+		play.setStroke(0, 180, 255);
+
+		
 		rules = new Rectangle(150, 325, 200, 75);
 		rules.setfill(0, 180, 255);
+		rules.setStroke(0, 180, 255);
+		
 		back = new Rectangle(25, 400, 50, 50);
-		back.setfill(0, 180, 255);
 
 	}
 	
 	public void setup() { 
 		  img = loadImage("back.png");
-
+		  sky = loadImage("sky.jpg");
 	}
 
 	public void draw() {
 		background(127, 217, 255);
 
+		image(sky,0,0,width,height);
 		if (isRulePage) {
-//			back.draw(this);
 			image(img,27,400,width/10,height/10);
 			
 			textSize(50);

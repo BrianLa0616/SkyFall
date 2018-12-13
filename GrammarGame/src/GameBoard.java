@@ -9,9 +9,9 @@ import processing.core.PImage;
 
 public class GameBoard extends PApplet {
 
-	private Rectangle rules, back, question;
-	private boolean isRulePage;
-	private PImage img;
+	private Rectangle setting, back, question;
+	private boolean isRulePage, isPaused;
+	private PImage settingButton, backButton;
 	private JFrame window;
 
 	public GameBoard() {
@@ -31,29 +31,37 @@ public class GameBoard extends PApplet {
 		canvas.requestFocus();
 		
 		
-		rules = new Rectangle(440,80,50,50);
+		setting = new Rectangle(440,10,50,50);
 		
 		question = new Rectangle(0,0,500,75);
 		question.setfill(255, 255, 255);
 		
+		back = new Rectangle(25, 400, 50, 50);
+
+		
 		isRulePage = false;
+		isPaused = false;
+		
 	
 	}
 	
 	public void setup() { 
-		  img = loadImage("back.png");
+		  settingButton = loadImage("setting.png");
+		  backButton = loadImage("back.png");
 
 	}
 
 	public void draw() {
 		background(127, 217, 255);
-		rules.draw(this);
+		question.draw(this);
+		image(settingButton,440,10,width/10,height/10);
+		image(backButton,27,400,width/10,height/10);
+
 		if (isRulePage) {
-			back.draw(this);
-			image(img,27,400,width/10,height/10);
 			
+			fill(0);
 			textSize(50);
-			text("HOW TO PLAY", 80, 75);
+			text("SETTINGS", 80, 75);
 			textSize(20);
 			text("1. Read the sentence at the top of the screen", 40, 125);
 			text("2. View answer choices in each cloud", 40, 175);
@@ -66,14 +74,16 @@ public class GameBoard extends PApplet {
 			
 		}
 		
-		question.draw(this);
 	}
 
 	public void mousePressed() {
-		if (!isRulePage && rules.isPointInside(mouseX, mouseY)) {
+		if (!isRulePage && setting.isPointInside(mouseX, mouseY)) {
 			isRulePage = true;
 		} else if (isRulePage && back.isPointInside(mouseX, mouseY)) {
 			isRulePage = false;
+		} else if (!isRulePage && back.isPointInside(mouseX, mouseY)) {
+			//popup
+			Menu menu = new Menu();
 		}
 		
 	}
