@@ -12,9 +12,11 @@ public class GameBoard extends PApplet {
 
 	private Rectangle setting, back, question;
 	private boolean isSettingPage, isPaused;
-	private PImage settingButton, backButton, sky, basket;
+	private PImage settingButton, backButton, sky;
 	private JFrame window;
-	
+
+	private Basket basket;
+	private Cloud[] cloud = new Cloud[4];
 	
 
 	public GameBoard() {
@@ -33,33 +35,43 @@ public class GameBoard extends PApplet {
 		window.setVisible(true);
 		canvas.requestFocus();
 		
-		
-		setting = new Rectangle(440,10,50,50);
+		//initiating fields
+		setting = new Rectangle(10,125,45,45);
 		
 		question = new Rectangle(0,0,500,75);
 		question.setfill(255, 255, 255);
 		
-		back = new Rectangle(25, 400, 50, 50);
+		back = new Rectangle(10, 75, 45, 45);
 
 		
 		isSettingPage = false;
 		isPaused = false;
 		
-		
+		basket = new Basket("basket.png",210,375);
 	
+		for (int i = 0; i < 4; i++) {
+			cloud[i] = new Cloud("cloud.png", i*100 + 50, 100);
+		}
 	}
+	
 	
 	public void setup() { 
 		  settingButton = loadImage("setting.png");
 		  backButton = loadImage("back.png");
 		  sky = loadImage("sky.jpg");
-		  basket = loadImage("basket.jpg");
+		  basket.setup(this);
+		  for (int i = 0; i < 4; i++) {
+				cloud[i].setup(this);
+		  }
+
 	}
 
 	public void draw() {
 		background(127, 217, 255);
 		image(sky,0,0,width,height);
-
+		
+		image(settingButton,9,125,width/10,height/10);
+		
 		if (isSettingPage) {
 			
 			textSize(50);
@@ -73,12 +85,19 @@ public class GameBoard extends PApplet {
 			
 		} else {
 			question.draw(this);
-			image(backButton,27,400,width/10,height/10);
-			image(basket,225,450,width/5,height/5);
-
+			image(backButton,9,75,width/10,height/10);
+			basket.draw(this);
+			for (int i = 0; i < 4; i++) {
+				cloud[i].draw(this);
+			}
 			
+			if (!isPaused) {
+				for (int i = 0; i < 4; i++) {
+					cloud[i].drop();
+				}
+			}
+
 		}
-		image(settingButton,440,10,width/10,height/10);
 
 		
 	}
@@ -103,14 +122,15 @@ public class GameBoard extends PApplet {
 	public void keyPressed() {
 		if (key == 'p') {
 			isPaused = !isPaused;
+
 		} else if (key == ' ') { 
 			
 		} else if (key == CODED) {
-			if (key == LEFT) {
-				
-			} else if (key == RIGHT) {
-				
-			} else if (key == DOWN) {
+			if (keyCode == LEFT) {
+				basket.move(-10);
+			} else if (keyCode == RIGHT) {
+				basket.move(10);
+			} else if (keyCode == DOWN) {
 				
 			} 
 		}
