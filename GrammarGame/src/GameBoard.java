@@ -15,8 +15,10 @@ public class GameBoard extends PApplet {
 	private PImage settingButton, backButton, sky;
 	private JFrame window;
 
+	
 	private Basket basket;
 	private Cloud[] cloud = new Cloud[4];
+	private int frequency;
 	
 
 	public GameBoard() {
@@ -47,11 +49,13 @@ public class GameBoard extends PApplet {
 		isSettingPage = false;
 		isPaused = false;
 		
-		basket = new Basket("basket.png",210,375);
+		basket = new Basket("basket.png",250,375);
 	
 		for (int i = 0; i < 4; i++) {
 			cloud[i] = new Cloud("cloud.png", i*100 + 50, 100);
 		}
+		
+		frequency = 0;
 	}
 	
 	
@@ -63,10 +67,13 @@ public class GameBoard extends PApplet {
 		  for (int i = 0; i < 4; i++) {
 				cloud[i].setup(this);
 		  }
+		  
+		  frameRate(30);
 
 	}
 
 	public void draw() {
+		System.out.println(mouseX);
 		background(127, 217, 255);
 		image(sky,0,0,width,height);
 		
@@ -92,8 +99,12 @@ public class GameBoard extends PApplet {
 			}
 			
 			if (!isPaused) {
-				for (int i = 0; i < 4; i++) {
-					cloud[i].drop();
+				frequency++;
+				if (frequency == 10) {
+					frequency = 0;
+					for (int i = 0; i < 4; i++) {
+						cloud[i].drop();
+					}
 				}
 			}
 
@@ -112,7 +123,7 @@ public class GameBoard extends PApplet {
 			int choice = JOptionPane.showConfirmDialog(window, "Are you sure you want to exit? Your progress will not be saved", "exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				
 			if (choice == 0) {
-				Menu menu = new Menu();
+				new Menu();
 				window.dispose();
 			}
 		}
@@ -127,13 +138,17 @@ public class GameBoard extends PApplet {
 			
 		} else if (key == CODED) {
 			if (keyCode == LEFT) {
-				basket.move(-10);
+				basket.move(-100);
 			} else if (keyCode == RIGHT) {
-				basket.move(10);
+				basket.move(100);
 			} else if (keyCode == DOWN) {
-				
+				for (int i = 0; i < 4; i++) {
+					cloud[i].drop();
+				}
 			} 
 		}
 	}
+	
+	
 
 }

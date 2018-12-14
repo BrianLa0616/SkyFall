@@ -20,7 +20,6 @@ public class Basket extends PApplet {
 
 	public void draw(PApplet d) {
 		d.image(basket, x, y, width, height);
-		d.ellipse(x, y, 100, 100);
 
 	}
 
