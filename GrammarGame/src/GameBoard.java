@@ -14,11 +14,14 @@ public class GameBoard extends PApplet {
 	private boolean isSettingPage, isPaused;
 	private PImage settingButton, backButton, sky;
 	private JFrame window;
+	private boolean hardDrop;
 
 	
 	private Basket basket;
 	private Cloud[] cloud = new Cloud[4];
 	private int frequency;
+	private int qIndex;
+	private Question q[] = new Question[50];
 	
 
 	public GameBoard() {
@@ -56,6 +59,12 @@ public class GameBoard extends PApplet {
 		}
 		
 		frequency = 0;
+		
+		q[0] = new Question("a","a","a", new String[] {"a","b","c","d"},"a");
+		q[1] = new Question("a","a","a", new String[] {"a","b","c","d"},"a");
+
+
+		qIndex = 0;
 	}
 	
 	
@@ -68,43 +77,75 @@ public class GameBoard extends PApplet {
 				cloud[i].setup(this);
 		  }
 		  
-		  frameRate(30);
+//		  frameRate(30);
 
 	}
 
 	public void draw() {
-		System.out.println(mouseX);
+		System.out.println("hello");
 		background(127, 217, 255);
+		textAlign(CENTER, CENTER);
 		image(sky,0,0,width,height);
 		
 		image(settingButton,9,125,width/10,height/10);
 		
 		if (isSettingPage) {
-			
 			textSize(50);
-			text("SETTINGS", 140, 75);
+			text("SETTINGS", 250, 75);
 			textSize(20);
-			text("Move left : left arrow", 150, 125);
-			text("Move right : right arrow", 150, 150);
-			text("Pause : p", 150, 175);
-			text("Quick drop : down arrow", 150, 200);
-			text("Hard drop : spacebar", 150, 225);
+			textAlign(RIGHT);
+			text("Move left :", 250, 125);
+			text("Move right :", 250, 150);
+			text("Pause :", 250, 175);
+			text("Quick drop :", 250, 200);
+			text("Hard drop :", 250, 225);
+			textAlign(LEFT);
+			
+			text(" left arrow", 250, 125);
+			text(" right arrow", 250, 150);
+			text(" p", 250, 175);
+			text(" down arrow", 250, 200);
+			text(" spacebar", 250, 225);
 			
 		} else {
+//			System.out.println(cloud[0].getY() + " " + mouseY);
+			fill(0);
 			question.draw(this);
+			text(q[qIndex].getSentence(), 250,35);
+			String ans[] = q[qIndex].getAnswers();
+			
+			
+			
 			image(backButton,9,75,width/10,height/10);
 			basket.draw(this);
 			for (int i = 0; i < 4; i++) {
 				cloud[i].draw(this);
 			}
-			
+			textSize(25);
+			for (int i = 0; i < 4; i++) {
+				text(ans[i],100*(i+1),cloud[i].getY()+45);
+			}
 			if (!isPaused) {
+				if (hardDrop) {
+					int index = (int)basket.getX()/100;
+					if (ans[index].equals(q[qIndex].getAnswer())) {
+						System.out.println("correct");
+					} else { System.out.println("wrong"); }
+					refresh();
+				}
 				frequency++;
-				if (frequency == 10) {
+				if (frequency == 1) {
 					frequency = 0;
 					for (int i = 0; i < 4; i++) {
 						cloud[i].drop();
 					}
+				}
+				if (cloud[0].getY() > 325) {
+					int index = (int)basket.getX()/100;
+					refresh();
+					if (ans[index].equals(q[qIndex].getAnswer())) {
+						System.out.println("correct");
+					} else { System.out.println("wrong"); }
 				}
 			}
 
@@ -134,9 +175,9 @@ public class GameBoard extends PApplet {
 		if (key == 'p') {
 			isPaused = !isPaused;
 
-		} else if (key == ' ') { 
-			
-		} else if (key == CODED) {
+		} else if (key == ' ' && !isPaused) { 
+			hardDrop = true;
+		} else if (key == CODED && !isPaused) {
 			if (keyCode == LEFT) {
 				basket.move(-100);
 			} else if (keyCode == RIGHT) {
@@ -147,6 +188,15 @@ public class GameBoard extends PApplet {
 				}
 			} 
 		}
+	}
+	
+	public void refresh() {
+		for (int i = 0; i < 4; i++) {
+			cloud[i].setY(100);
+		}
+		
+		qIndex = 0;
+//		q[qIndex].shuffle();
 	}
 	
 	

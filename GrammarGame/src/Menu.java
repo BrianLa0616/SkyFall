@@ -55,15 +55,16 @@ public class Menu extends PApplet {
 
 	public void draw() {
 		background(127, 217, 255);
-
+		textAlign(CENTER,CENTER);
 		image(sky, 0, 0, width, height);
 
 		if (isRulePage) {
 			image(backButton, 27, 400, width / 10, height / 10);
 
 			textSize(50);
-			text("HOW TO PLAY", 80, 75);
+			text("HOW TO PLAY", 250, 75);
 			textSize(20);
+			textAlign(LEFT);
 			text("1. Read the sentence at the top of the screen", 40, 125);
 			text("2. View answer choices in each cloud", 40, 165);
 			text("3. Use arrow keys to move the basket", 40, 205);
@@ -74,13 +75,21 @@ public class Menu extends PApplet {
 		} else if (isSettingPage) {
 			image(backButton, 27, 400, width / 10, height / 10);
 			textSize(50);
-			text("SETTINGS", 140, 75);
+			text("SETTINGS", 250, 75);
 			textSize(20);
-			text("Move left : left arrow", 150, 125);
-			text("Move right : right arrow", 150, 150);
-			text("Pause : p", 150, 175);
-			text("Quick drop : down arrow", 150, 200);
-			text("Hard drop : spacebar", 150, 225);
+			textAlign(RIGHT);
+			text("Move left :", 250, 125);
+			text("Move right :", 250, 150);
+			text("Pause :", 250, 175);
+			text("Quick drop :", 250, 200);
+			text("Hard drop :", 250, 225);
+			textAlign(LEFT);
+			
+			text(" left arrow", 250, 125);
+			text(" right arrow", 250, 150);
+			text(" p", 250, 175);
+			text(" down arrow", 250, 200);
+			text(" spacebar", 250, 225);
 			
 		} else {
 			
@@ -106,11 +115,11 @@ public class Menu extends PApplet {
 			setting.draw(this);
 
 			textSize(70);
-			text("SKYFALL", 105, 90);
+			text("SKYFALL", 250, 60);
 			textSize(40);
-			text("PLAY", 200, 205);
-			text("RULES", 190, 305);
-			text("SETTINGS", 160, 405);
+			text("PLAY", 250, 182.5f);
+			text("RULES", 250, 282.5f);
+			text("SETTINGS", 250, 382.5f);
 		}
 	}
 
@@ -131,7 +140,7 @@ public class Menu extends PApplet {
 
 			window.dispose();
 
-			GameBoard gameboard = new GameBoard();
+			new GameBoard();
 		}
 	}
 

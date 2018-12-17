@@ -29,4 +29,7 @@ public class Basket extends PApplet {
 		}
 	}
 
+	public float getX() {
+		return x;
+	}
 }

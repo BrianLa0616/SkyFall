@@ -23,15 +23,23 @@ public class Cloud extends PApplet{
 	
 	public void drop() {
 		if (y < 475) {
-			y+=2;
+			y+=.5;
 		}
 	}
 	
 	public void hardDrop() {
-		y = 475;
+		y = 325;
 	}
 	
 	public float getY() {
 		return y;
+	}
+	
+	public void setY(float x) {
+		y = x;
+	}
+	
+	public void shuffle() {
+		
 	}
 }
