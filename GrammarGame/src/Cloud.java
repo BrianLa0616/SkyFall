@@ -39,7 +39,5 @@ public class Cloud extends PApplet{
 		y = x;
 	}
 	
-	public void shuffle() {
-		
-	}
+	
 }

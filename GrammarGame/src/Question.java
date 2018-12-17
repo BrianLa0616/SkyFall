@@ -65,6 +65,7 @@ public class Question {
 			if (!used[i]) {
 				answers[3] = temp[i];
 			}
+			used[i] = false;
 		}
 	}
 	
