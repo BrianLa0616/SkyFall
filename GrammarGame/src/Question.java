@@ -1,15 +1,14 @@
 
 public class Question {
 
-	private String sentence, subject, verb;
+	private String sentence, subject, verb, plurality;
 	private String[] answers;
-	private String answer, plurality;
+	private String answer, specialMessage;
 	private boolean[] used;
+	private boolean completed;
 
-	public Question(String sent, String sub, String ver, String[] ans,String plurality) {
+	public Question(String sent, String[] ans, String subject, String verb, String plurality, String specialMessage) {
 		sentence = sent;
-		subject = sub;
-		verb = ver;
 
 		answers = ans;
 		answer = answers[0];
@@ -19,6 +18,10 @@ public class Question {
 		for (int i = 0; i < 4; i++) {
 			used[i] = false;
 		}
+		this.specialMessage = specialMessage;
+		completed = false;
+		this.subject = subject;
+		this.verb = verb;
 		this.plurality = plurality;
 	}
 
@@ -43,7 +46,7 @@ public class Question {
 	}
 
 	public void shuffle() {
-		
+
 		String[] temp = new String[4];
 		for (int i = 0; i < 4; i++) {
 			temp[i] = answers[i];
@@ -68,8 +71,21 @@ public class Question {
 			used[i] = false;
 		}
 	}
-	
-	public String getPlurality() {
-		return plurality;
+
+	public String getSpecialMessage() {
+		return specialMessage;
+	}
+
+	public boolean getState() {
+		return completed;
+	}
+
+	public void switchState() {
+		completed = true;
+	}
+
+	public String getMessage() {
+		return "In this sentence, the subject, " + subject + ", is " + plurality + ", making the answer \"" + answer
+				+ "\", the " + plurality + " form of " + verb;
 	}
 }

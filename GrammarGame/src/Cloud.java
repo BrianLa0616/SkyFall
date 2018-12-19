@@ -23,7 +23,7 @@ public class Cloud extends PApplet{
 	
 	public void drop() {
 		if (y < 475) {
-			y+=.5;
+			y+=1;
 		}
 	}
 	

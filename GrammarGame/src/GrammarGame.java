@@ -3,7 +3,7 @@ public class GrammarGame {
 
 	
 	public static void main(String args[]) {
-		new GameBoard();
+		new Menu();
 		
 		
 	}

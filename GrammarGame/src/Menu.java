@@ -20,7 +20,7 @@ public class Menu extends PApplet {
 		PSurfaceAWT.SmoothCanvas canvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
 		window = (JFrame) canvas.getFrame();
 
-		window.setBounds(100, 100, 500, 500);
+		window.setBounds(200, 100, 500, 500);
 		window.setMinimumSize(new Dimension(200, 100));
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(true);
@@ -55,22 +55,20 @@ public class Menu extends PApplet {
 
 	public void draw() {
 		background(127, 217, 255);
-		textAlign(CENTER,CENTER);
+		textAlign(CENTER, CENTER);
 		image(sky, 0, 0, width, height);
 
 		if (isRulePage) {
 			image(backButton, 27, 400, width / 10, height / 10);
 
 			textSize(50);
-			text("HOW TO PLAY", 250, 75);
+			text("HOW TO PLAY", 250, 50);
 			textSize(20);
 			textAlign(LEFT);
-			text("1. Read the sentence at the top of the screen", 40, 125);
-			text("2. View answer choices in each cloud", 40, 165);
-			text("3. Use arrow keys to move the basket", 40, 205);
-			text("to the answer choice that completes ",40,230);
-			text("the sentence correctly", 40,255);
-			text("4. Catch the correct choice", 40, 295);
+			fill(0, 180, 255);
+			rect(40,95,425,305);
+			fill(255);
+			text("There is an incompleted sentence at the \ntop of the screen with the verb missing.\nThere is a verb on the right in paranthesis\nthat you must match its plurality to that of\nthe subject. There are four clouds coming\ndown, each containing a verb that can\nreplace the blank in the sentence. You\nmust move your basket under the cloud\nthat correctly completes the sentence \nusing subject-verb agreement.",50,115);
 
 		} else if (isSettingPage) {
 			image(backButton, 27, 400, width / 10, height / 10);
@@ -84,29 +82,29 @@ public class Menu extends PApplet {
 			text("Quick drop :", 250, 200);
 			text("Hard drop :", 250, 225);
 			textAlign(LEFT);
-			
+
 			text(" left arrow", 250, 125);
 			text(" right arrow", 250, 150);
 			text(" p", 250, 175);
 			text(" down arrow", 250, 200);
 			text(" spacebar", 250, 225);
-			
+
 		} else {
-			
+
 			if (play.isPointInside(mouseX, mouseY)) {
 				play.setfill(0, 162, 229);
 			} else {
 				play.setfill(0, 180, 255);
 			}
-			
+
 			if (rules.isPointInside(mouseX, mouseY)) {
-				rules.setfill(0,162,229);
+				rules.setfill(0, 162, 229);
 			} else {
 				rules.setfill(0, 180, 255);
 			}
-			
+
 			if (setting.isPointInside(mouseX, mouseY)) {
-				setting.setfill(0,162,229);
+				setting.setfill(0, 162, 229);
 			} else {
 				setting.setfill(0, 180, 255);
 			}
